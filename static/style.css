@@ -1,0 +1,18 @@
+body {
+    font-family: sans-serif;
+    padding: 20px;
+    background: white;
+    color: black;
+  }
+  
+  body.dark {
+    background: #222;
+    color: white;
+  }
+  
+  input, button {
+    display: block;
+    margin: 5px 0;
+    padding: 6px;
+  }
+  

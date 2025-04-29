@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <title>Личный кабинет</title>
+  <link rel="stylesheet" href="/static/style.css" />
+</head>
+<body>
+  <h1>Привет, {{.Login}}</h1>
+
+  <button onclick="logout()">Выйти</button>
+
+  <h2>Тема:</h2>
+  <button onclick="setTheme('light')">Светлая</button>
+  <button onclick="setTheme('dark')">Тёмная</button>
+
+  <h2>Данные:</h2>
+  <button onclick="loadData()">Обновить</button>
+  <pre id="dataDisplay">Нет данных</pre>
+
+  <script>
+    function logout() {
+      fetch("/logout", { method: "POST" }).then(() => location.href = "/");
+    }
+
+    function loadData() {
+      fetch("/data")
+        .then(res => res.json())
+        .then(data => {
+          document.getElementById("dataDisplay").textContent = JSON.stringify(data, null, 2);
+        });
+    }
+
+    function setTheme(theme) {
+      document.body.className = theme;
+      localStorage.setItem("theme", theme);
+    }
+
+    const saved = localStorage.getItem("theme");
+    if (saved) document.body.className = saved;
+  </script>
+</body>
+</html>
