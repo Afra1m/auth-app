@@ -6,6 +6,12 @@ import (
 )
 
 func main() {
+
+	http.HandleFunc("/static/", func(w http.ResponseWriter, r *http.Request) {
+		log.Printf("Serving static file: %s", r.URL.Path)
+		http.StripPrefix("/static/", http.FileServer(http.Dir("static"))).ServeHTTP(w, r)
+	})
+
 	// Роуты
 	http.HandleFunc("/", indexHandler)
 	http.HandleFunc("/register", registerHandler)
@@ -13,10 +19,6 @@ func main() {
 	http.HandleFunc("/logout", logoutHandler)
 	http.HandleFunc("/profile", authMiddleware(profileHandler))
 	http.HandleFunc("/data", dataHandler)
-
-	// Статика
-	fs := http.FileServer(http.Dir("./static"))
-	http.Handle("/static/", http.StripPrefix("/static/", fs))
 
 	log.Println("Сервер запущен на http://localhost:8080")
 	err := http.ListenAndServe(":8080", nil)
