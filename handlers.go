@@ -2,6 +2,7 @@ package main
 
 import (
 	"encoding/json"
+	"fmt"
 	"html/template"
 	"io/ioutil"
 	"net/http"
@@ -22,7 +23,11 @@ var (
 )
 
 func indexHandler(w http.ResponseWriter, r *http.Request) {
-	tmpl, _ := template.ParseFiles("templates/index.html")
+	tmpl, err := template.ParseFiles("templates/index.html")
+	if err != nil {
+		http.Error(w, fmt.Sprintf("Ошибка загрузки шаблона: %v", err), http.StatusInternalServerError)
+		return
+	}
 	tmpl.Execute(w, nil)
 }
 
@@ -95,7 +100,12 @@ func logoutHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func profileHandler(w http.ResponseWriter, r *http.Request) {
-	tmpl, _ := template.ParseFiles("templates/profile.html")
+	tmpl, err := template.ParseFiles("templates/profile.html")
+	if err != nil {
+		http.Error(w, fmt.Sprintf("Ошибка загрузки шаблона: %v", err), http.StatusInternalServerError)
+		return
+	}
+
 	cookie, _ := r.Cookie("session_id")
 
 	sessionsMu.Lock()
@@ -118,10 +128,19 @@ func dataHandler(w http.ResponseWriter, r *http.Request) {
 		"timestamp": now.Format(time.RFC3339),
 		"message":   "Актуальные данные",
 	}
-	bytes, _ := json.MarshalIndent(data, "", "  ")
+	bytes, err := json.MarshalIndent(data, "", "  ")
+	if err != nil {
+		http.Error(w, fmt.Sprintf("Ошибка генерации данных: %v", err), http.StatusInternalServerError)
+		return
+	}
 
 	// Кэшировать в файл
-	_ = ioutil.WriteFile(cacheFile, bytes, 0644)
+	err = ioutil.WriteFile(cacheFile, bytes, 0644)
+	if err != nil {
+		http.Error(w, fmt.Sprintf("Ошибка записи в кэш: %v", err), http.StatusInternalServerError)
+		return
+	}
+
 	cacheData = bytes
 	lastCacheAt = now
 

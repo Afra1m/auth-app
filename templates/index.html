@@ -2,24 +2,40 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8" />
-  <title>Вход / Регистрация</title>
-  <link rel="stylesheet" href="/static/style.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Добро пожаловать</title>
+  <link rel="stylesheet" href="/static/styles.css" />
 </head>
 <body>
-  <h1>Добро пожаловать</h1>
+  <header>
+    <h1>Система аутентификации</h1>
+    <button id="theme-toggle">Переключить тему</button>
+  </header>
 
-  <h2>Регистрация</h2>
-  <form action="/register" method="POST">
-    <input name="login" placeholder="Логин" required />
-    <input name="password" type="password" placeholder="Пароль" required />
-    <button type="submit">Зарегистрироваться</button>
-  </form>
+  <main class="auth-container">
+    <section class="auth-form">
+      <h2>Вход</h2>
+      <form action="/login" method="post">
+        <label for="login">Логин:</label>
+        <input type="text" name="login" id="login" required />
+        <label for="password">Пароль:</label>
+        <input type="password" name="password" id="password" required />
+        <button type="submit">Войти</button>
+      </form>
+    </section>
 
-  <h2>Вход</h2>
-  <form action="/login" method="POST">
-    <input name="login" placeholder="Логин" required />
-    <input name="password" type="password" placeholder="Пароль" required />
-    <button type="submit">Войти</button>
-  </form>
+    <section class="auth-form">
+      <h2>Регистрация</h2>
+      <form action="/register" method="post">
+        <label for="login-register">Логин:</label>
+        <input type="text" name="login" id="login-register" required />
+        <label for="password-register">Пароль:</label>
+        <input type="password" name="password" id="password-register" required />
+        <button type="submit">Зарегистрироваться</button>
+      </form>
+    </section>
+  </main>
+
+  <script src="/static/scripts.js"></script>
 </body>
 </html>

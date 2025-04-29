@@ -2,42 +2,49 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Личный кабинет</title>
-  <link rel="stylesheet" href="/static/style.css" />
+  <link rel="stylesheet" href="/static/styles.css" />
 </head>
 <body>
-  <h1>Привет, {{.Login}}</h1>
+  <header>
+    <h1>Привет, {{.Login}}!</h1>
+    <a href="/logout" class="logout-button">Выйти</a>
+  </header>
 
-  <button onclick="logout()">Выйти</button>
+  <main class="profile-container">
+    <section class="profile-card">
+      <div class="avatar-placeholder">👤</div>
+      <div class="profile-info">
+        <p><strong>Логин:</strong> {{.Login}}</p>
+        <p><strong>Email:</strong> {{.Login}}@example.com</p>
+      </div>
+    </section>
 
-  <h2>Тема:</h2>
-  <button onclick="setTheme('light')">Светлая</button>
-  <button onclick="setTheme('dark')">Тёмная</button>
+    <section class="data-section">
+      <h2>Данные:</h2>
+      <pre id="data">Загрузка данных...</pre>
+      <button id="refresh-data">Обновить данные</button>
+    </section>
+  </main>
 
-  <h2>Данные:</h2>
-  <button onclick="loadData()">Обновить</button>
-  <pre id="dataDisplay">Нет данных</pre>
-
+  <script src="/static/scripts.js"></script>
   <script>
-    function logout() {
-      fetch("/logout", { method: "POST" }).then(() => location.href = "/");
-    }
-
-    function loadData() {
-      fetch("/data")
-        .then(res => res.json())
+    function fetchData() {
+      fetch('/data')
+        .then(response => response.json())
         .then(data => {
-          document.getElementById("dataDisplay").textContent = JSON.stringify(data, null, 2);
+          document.getElementById('data').textContent = JSON.stringify(data, null, 2);
+        })
+        .catch(() => {
+          document.getElementById('data').textContent = 'Ошибка получения данных';
         });
     }
 
-    function setTheme(theme) {
-      document.body.className = theme;
-      localStorage.setItem("theme", theme);
-    }
-
-    const saved = localStorage.getItem("theme");
-    if (saved) document.body.className = saved;
+    document.addEventListener('DOMContentLoaded', () => {
+      fetchData();
+      document.getElementById('refresh-data').addEventListener('click', fetchData);
+    });
   </script>
 </body>
 </html>

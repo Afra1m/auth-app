@@ -1,18 +1,172 @@
+/* Общие стили */
 body {
-    font-family: sans-serif;
-    padding: 20px;
-    background: white;
-    color: black;
-  }
-  
-  body.dark {
-    background: #222;
-    color: white;
-  }
-  
-  input, button {
-    display: block;
-    margin: 5px 0;
-    padding: 6px;
-  }
-  
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f4f6f8;
+  color: #333;
+}
+
+header {
+  background-color: #2c3e50;
+  color: #ecf0f1;
+  padding: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+header h1 {
+  margin: 0;
+}
+
+.logout-button,
+#theme-toggle {
+  background-color: #e74c3c;
+  color: #fff;
+  border: none;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.logout-button:hover,
+#theme-toggle:hover {
+  background-color: #c0392b;
+}
+
+/* Контейнеры */
+.auth-container,
+.profile-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding: 2rem;
+  gap: 2rem;
+}
+
+/* Формы */
+.auth-form {
+  background-color: #fff;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  width: 300px;
+}
+
+.auth-form h2 {
+  margin-top: 0;
+}
+
+.auth-form label {
+  display: block;
+  margin-top: 1rem;
+}
+
+.auth-form input {
+  width: 100%;
+  padding: 0.5rem;
+  margin-top: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.auth-form button {
+  margin-top: 1.5rem;
+  width: 100%;
+  padding: 0.75rem;
+  background-color: #3498db;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.auth-form button:hover {
+  background-color: #2980b9;
+}
+
+/* Профиль */
+.profile-card {
+  background-color: #fff;
+  padding: 2rem;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.avatar-placeholder {
+  font-size: 3rem;
+  background-color: #bdc3c7;
+  border-radius: 50%;
+  width: 80px;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.profile-info p {
+  margin: 0.5rem 0;
+}
+
+/* Данные */
+.data-section {
+  background-color: #fff;
+  padding: 2rem;
+  border-radius: 8px;
+  width: 100%;
+  max-width: 600px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.data-section h2 {
+  margin-top: 0;
+}
+
+.data-section pre {
+  background-color: #ecf0f1;
+  padding: 1rem;
+  border-radius: 4px;
+  overflow-x: auto;
+}
+
+.data-section button {
+  margin-top: 1rem;
+  padding: 0.75rem 1.5rem;
+  background-color: #2ecc71;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.data-section button:hover {
+  background-color: #27ae60;
+}
+
+/* Темы */
+body.dark-theme {
+  background-color: #2c3e50;
+  color: #ecf0f1;
+}
+
+body.dark-theme header {
+  background-color: #1a252f;
+}
+
+body.dark-theme .auth-form,
+body.dark-theme .profile-card,
+body.dark-theme .data-section {
+  background-color: #34495e;
+  color: #ecf0f1;
+}
+
+body.dark-theme .auth-form input,
+body.dark-theme .data-section pre {
+  background-color: #2c3e50;
+  color: #ecf0f1;
+  border: 1px solid #7f8c8d;
+}
